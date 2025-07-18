@@ -1,0 +1,28 @@
+<h1>Crie seu post</h1>
+<form action="/posts{{#if action }}/save{{/if}}" method="post">
+    <input type="text" name="title" id="title" placeholder="Título" value="{{post.title}}" required>
+    <textarea name="content" id="content" placeholder="Conteúdo" required>{{post.content}}</textarea>
+    <button type="submit">{{#if action }}Salvar{{else}}Criar{{/if}}</button>
+    {{#if post.id}}
+        <input type="hidden" name="id" value="{{post.id}}">
+    {{/if}}
+    {{#if action}}
+        <input type="hidden" name="action" value="{{action}}">
+    {{/if}}
+    {{#if error}}
+        <div class="error">{{error}}</div>
+    {{/if}}
+    {{#if success}}
+        <div class="success">{{success}}</div>
+    {{/if}}
+    {{#if media}}
+        <div class="media">
+            <h3>Mídia Anexada:</h3>
+            <ul>
+                {{#each media}}
+                    <li>{{this.filename}} - <a href="/media/{{this.id}}/delete">Excluir</a></li>
+                {{/each}}
+            </ul>
+        </div>
+    {{/if}}
+</form>
