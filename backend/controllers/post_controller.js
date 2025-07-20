@@ -5,7 +5,8 @@ async function createPost(req, res){
     const post = await Post.create({
         title: req.body.title,
         content: req.body.content,
-        userId: req.body.userId
+        userId: req.body.userId || req.session.user.id,
+        userName: req.body.userName || req.session.user.name
     });
     res.json(post);
 }

@@ -8,6 +8,9 @@ async function syncer() {
     try {
         // Sincroniza os modelos com o banco de dados
         User.hasMany(Post, { foreignKey: 'userId' });
+        User.hasMany(Comment, { foreignKey: 'userId' });
+        Post.hasMany(Comment, { foreignKey: 'postId' });
+        Post.hasMany(Media, { foreignKey: 'postId' });
 
         await sequelize.sync({ force: false });
         console.log("Banco de dados sincronizado com sucesso.");
