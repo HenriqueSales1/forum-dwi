@@ -1,9 +1,11 @@
 import Post from "../models/post.js";
+import user from "../models/user.js";
 
 async function createPost(req, res){
     const post = await Post.create({
         title: req.body.title,
-        content: req.body.content
+        content: req.body.content,
+        userId: req.body.userId
     });
     res.json(post);
 }

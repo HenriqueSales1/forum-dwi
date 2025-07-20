@@ -7,6 +7,8 @@ import User from "../models/user.js";
 async function syncer() {
     try {
         // Sincroniza os modelos com o banco de dados
+        User.hasMany(Post, { foreignKey: 'userId' });
+
         await sequelize.sync({ force: false });
         console.log("Banco de dados sincronizado com sucesso.");
     } catch (error) {
