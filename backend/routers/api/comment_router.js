@@ -1,6 +1,6 @@
-import {createComment, getComments, editComment, deleteComment } from "../controllers/comment_controller.js";
+import {createComment, getComments, editComment, deleteComment } from "../../controllers/comment_controller.js";
 import { Router } from "express";
-import authMiddleware from "../middleware/auth.js";
+import authMiddleware from "../../middleware/auth.js";
 
 const commentRouter = Router();
 

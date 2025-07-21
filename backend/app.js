@@ -5,9 +5,9 @@ import cors from 'cors';
 
 // Rotas
 
-import postRouter from './routers/post_router.js';
-import userRouter from './routers/user_router.js';
-import commentRouter from './routers/comment_router.js';
+import postRouter from './routers/api/post_router.js';
+import userRouter from './routers/api/user_router.js';
+import commentRouter from './routers/api/comment_router.js';
 
 
 if (!await syncer()) {

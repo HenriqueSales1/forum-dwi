@@ -1,4 +1,4 @@
-import {promptUser, createUser, promptLogin, login, logout} from "../controllers/user_controller.js";
+import {promptUser, createUser, promptLogin, login, logout} from "../../controllers/user_controller.js";
 import { Router } from "express";
 
 const userRouter = Router();
