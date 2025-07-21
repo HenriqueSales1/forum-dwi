@@ -3,8 +3,8 @@ import { Router } from "express";
 import authMiddleware from "../middleware/auth.js";
 
 const postRouter = Router();
+postRouter.get("/", getPosts);
 postRouter.post("/create", authMiddleware, createPost);
-postRouter.get("/list", getPosts);
 postRouter.put("/edit/:id", authMiddleware, editPost);
 postRouter.delete("/delete/:id", authMiddleware, deletePost);
 

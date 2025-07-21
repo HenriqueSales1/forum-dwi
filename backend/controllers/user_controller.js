@@ -51,7 +51,8 @@ async function login(req, res) {
 
         const user = await User.findOne({
             where: { [Op.or]: [{ email: username }, { username: username }] }
-        });
+        }); 
+
         if (!user) {
             return res.status(404).json({ message: "Credenciais inválidas." });
         }

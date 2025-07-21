@@ -1,6 +1,7 @@
 import express from 'express';
 import { syncer } from './database/mysql.js';
 import multer from 'multer';
+import cors from 'cors';
 
 // Rotas
 
@@ -16,16 +17,24 @@ if (!await syncer()) {
 
 const app = express();
 
+app.use(cors({
+
+    allowOrigin: '*',
+
+    methods: 'GET,PUT,POST,DELETE',
+
+}));
+
 app.use(express.json());
 
 
 // const upload = multer({ dest: 'uploads/' });
 app.use(express.json());
 
-app.use('/posts', postRouter);
-app.use('/users', userRouter);
-app.use('/posts/comments', commentRouter);
+app.use('/api/posts', postRouter);
+app.use('/api/users', userRouter);
+app.use('/api/posts/comments', commentRouter);
 
-app.listen(80, () => {
-  console.log('Server is running on http://localhost:80');
+app.listen(3000, () => {
+  console.log('Server is running on http://localhost:3000');
 });
