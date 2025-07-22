@@ -1,7 +1,8 @@
+import sequelize from "./mysql.js";
+import Perms from "../models/perms.js";
 import Post from "../models/post";
 import Comment from "../models/comment.js";
 import Media from "../models/media.js";
-import sequelize from "./mysql.js";
 import User from "../models/user.js";
 
 async function syncer() {

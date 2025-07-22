@@ -14,7 +14,8 @@ async function createUser(req, res) {
             name: req.body.name,
             username: req.body.username,
             email: req.body.email,
-            password: password
+            password: password,
+            permsId: req.body.permsId || 2
         });
         res.status(201).json(
             {
@@ -23,7 +24,8 @@ async function createUser(req, res) {
                     id: user.id,
                     name: user.name,
                     username: user.username,
-                    email: user.email
+                    email: user.email,
+                    permsId: user.permsId
                 }
             }
         );
