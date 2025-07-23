@@ -1,55 +1,53 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 import { createPost } from '../data_acess/post_api';
 
-const formStyles = {
-    padding: '16px',
-    border: '1px solid #ddd',
-    borderRadius: '8px',
-    marginBottom: '24px',
-};
-
 const PostForm = ({ onPostCreated }) => {
+  const { user } = useContext(AuthContext);
+  const [title, setTitle] = useState(''); 
   const [content, setContent] = useState('');
-  const [media, setMedia] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!content) {
-      alert("O conteúdo do post não pode estar vazio.");
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append('content', content);
-    if (media) {
-      formData.append('media', media); [cite_start]
-    }
+    const userId = user.id;
+    const postData = { title, content, userId };
 
     try {
-      const newPost = await createPost(formData);
+      const newPost = await createPost(postData);
       alert('Post criado com sucesso!');
+      setTitle(''); 
       setContent('');
-      setMedia(null);
-      document.querySelector('input[type="file"]').value = ''; 
       onPostCreated(newPost);
     } catch (error) {
-      alert('Erro ao criar o post. Verifique se você está logado.');
+      alert('Erro ao criar o post.');
     }
   };
 
+  if (!user) {
+    return null;
+  }
+
   return (
-    <form onSubmit={handleSubmit} style={formStyles}>
+    <form onSubmit={handleSubmit} className="post-form"> 
       <h3>Criar novo post</h3>
+      
+      <input
+        type="text"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        placeholder="Título do post"
+        required
+        style={{ width: '100%', padding: '8px', boxSizing: 'border-box', marginBottom: '10px' }}
+      />
+
       <textarea
         value={content}
         onChange={(e) => setContent(e.target.value)}
-        placeholder="O que você está pensando?"
+        placeholder={`No que você está pensando, ${user.name}?`}
         rows="4"
-        style={{ width: '100%', marginBottom: '10px', padding: '8px' }}
         required
-      ></textarea>
-      <input type="file" onChange={(e) => setMedia(e.target.files[0])} />
-      <button type="submit" style={{ marginTop: '10px', float: 'right' }}>Postar</button>
+      ></textarea><br/>
+      <button type="submit">Postar</button>
     </form>
   );
 };

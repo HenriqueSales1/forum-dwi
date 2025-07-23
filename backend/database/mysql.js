@@ -9,16 +9,16 @@ const sequelize = new Sequelize({
     password: "root"
 });
 
-export async function syncer() {
-    try {
-        await sequelize.authenticate();
-        console.log("Conexão com o banco estabelecida.");
-        await sequelize.sync();
-    } catch (error) {
-        console.error("Erro ao conectar com o banco:", error);
-        return false;
-    }
-    return true;
-}
+// export async function syncer() {
+//     try {
+//         await sequelize.authenticate();
+//         console.log("Conexão com o banco estabelecida.");
+//         await sequelize.sync();
+//     } catch (error) {
+//         console.error("Erro ao conectar com o banco:", error);
+//         return false;
+//     }
+//     return true;
+// }
 
 export default sequelize;

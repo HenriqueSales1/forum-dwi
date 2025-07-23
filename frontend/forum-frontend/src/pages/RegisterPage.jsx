@@ -1,15 +1,13 @@
-// src/pages/RegisterPage.jsx
-
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { register } from '../data_acess/user_api';
-import './RegisterPage.css'; // 1. Importe o arquivo CSS
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { register } from "../data_acess/user_api";
+import "./RegisterPage.css";
 
 const RegisterPage = () => {
-  const [name, setName] = useState('');
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
@@ -18,18 +16,17 @@ const RegisterPage = () => {
 
     try {
       await register(userData);
-      alert('Usuário registrado com sucesso! Faça o login para continuar.');
-      navigate('/login');
+      alert("Usuário registrado com sucesso! Faça o login para continuar.");
+      navigate("/login");
     } catch (error) {
       if (error.response) {
-        alert('Falha no registro: ' + error.response.data.message);
+        alert("Falha no registro: " + error.response.data.message);
       } else {
-        alert('Não foi possível se conectar ao servidor.');
+        alert("Não foi possível se conectar ao servidor.");
       }
     }
   };
 
-  // 2. Substitua os 'style' por 'className'
   return (
     <div className="register-container">
       <form onSubmit={handleRegister} className="register-form">

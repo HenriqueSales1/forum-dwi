@@ -14,3 +14,13 @@ export const register = async (userData) => {
     throw error;
   }
 };
+
+export const getUserProfile = async () => {
+  try {
+    const response = await api.get('/users/profile'); 
+    return response.data;
+  } catch (error) {
+    console.error("Erro ao buscar perfil do usuário:", error);
+    throw error;
+  }
+};

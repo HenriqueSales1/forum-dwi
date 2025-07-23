@@ -1,16 +1,10 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import "./NavBar.css";
+import React, { useContext } from 'react'; 
+import { Link } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext'; 
+import './Navbar.css';
 
 const Navbar = () => {
-  const navigate = useNavigate();
-  const isLoggedIn = !!localStorage.getItem("token");
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/login");
-    window.location.reload();
-  };
+  const { user, logout } = useContext(AuthContext);
 
   return (
     <nav className="navbar">
@@ -18,8 +12,8 @@ const Navbar = () => {
         <Link to="/">Fórum</Link>
       </div>
       <div className="navbar-links">
-        {isLoggedIn ? (
-          <button onClick={handleLogout} className="logout-button">
+        {user ? ( 
+          <button onClick={logout} className="logout-button">
             Logout
           </button>
         ) : (

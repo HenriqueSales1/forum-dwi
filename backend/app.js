@@ -1,5 +1,5 @@
 import express from 'express';
-import { syncer } from './database/mysql.js';
+import  { syncer }  from './database/syncer.js';
 import {seedPerms} from './database/seeder.js';
 import cors from 'cors';
 

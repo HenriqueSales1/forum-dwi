@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
-import User from "./user.js";
 import sequelize from "../database/mysql.js";
+import User from "./user.js";
 
 const Post = sequelize.define("Post", {
     title: {
@@ -15,10 +15,11 @@ const Post = sequelize.define("Post", {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: 'Users',
+            model: User,
             key: 'id'
         }
     }
 });
+
 
 export default Post;

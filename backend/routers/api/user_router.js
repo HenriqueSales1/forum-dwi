@@ -1,12 +1,13 @@
-import {promptUser, createUser, promptLogin, login, logout} from "../../controllers/user_controller.js";
+import {  createUser, login, logout, getUserProfile, } from "../../controllers/user_controller.js";
 import { Router } from "express";
+import authMiddleware from "../../middleware/auth.js"; 
 
 const userRouter = Router();
 
-userRouter.get('/register', promptUser);
-userRouter.post('/register', createUser);
-userRouter.get('/login', promptLogin);
-userRouter.post('/login', login);
-userRouter.get('/logout', logout);
+userRouter.post("/register", createUser);
+userRouter.post("/login", login);
+userRouter.get("/logout", authMiddleware, logout);
+userRouter.get("/profile", authMiddleware, getUserProfile);
+
 
 export default userRouter;

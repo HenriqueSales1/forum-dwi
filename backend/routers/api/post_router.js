@@ -4,7 +4,7 @@ import authMiddleware from "../../middleware/auth.js";
 
 const postRouter = Router();
 postRouter.get("/", getPosts);
-postRouter.post("/create", authMiddleware, createPost);
+postRouter.post("/", authMiddleware, createPost);
 postRouter.put("/edit/:id", authMiddleware, editPost);
 postRouter.delete("/delete/:id", authMiddleware, deletePost);
 

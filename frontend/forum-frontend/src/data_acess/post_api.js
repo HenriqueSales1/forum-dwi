@@ -12,15 +12,20 @@ export const getPosts = async () => {
 
 export const createPost = async (postData) => {
   try {
-    [cite_start]
-    const response = await api.post('/posts', postData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
+    const response = await api.post('/posts', postData);
     return response.data;
   } catch (error) {
     console.error("Erro ao criar post:", error);
     throw error;
   }
 };
+
+export async function deletePost(req, res) {
+  const post = await api.delete('/posts');
+  if (post) {
+    await post.destroy();
+    res.status(204).send();
+  } else {
+    res.status(404).send("Postagem não encontrada.");
+  }
+}
