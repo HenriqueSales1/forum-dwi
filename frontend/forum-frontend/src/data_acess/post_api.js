@@ -1,8 +1,8 @@
-import api from './api'; 
+import api from "./api";
 
 export const getPosts = async () => {
   try {
-    const response = await api.get('/posts');
+    const response = await api.get("/posts");
     return response.data;
   } catch (error) {
     console.error("Erro ao buscar posts:", error);
@@ -12,7 +12,7 @@ export const getPosts = async () => {
 
 export const createPost = async (postData) => {
   try {
-    const response = await api.post('/posts', postData);
+    const response = await api.post("/posts", postData);
     return response.data;
   } catch (error) {
     console.error("Erro ao criar post:", error);
@@ -20,12 +20,11 @@ export const createPost = async (postData) => {
   }
 };
 
-export async function deletePost(req, res) {
-  const post = await api.delete('/posts');
-  if (post) {
-    await post.destroy();
-    res.status(204).send();
-  } else {
-    res.status(404).send("Postagem não encontrada.");
+export const deletePost = async (postId) => {
+  try {
+    await api.delete(`/posts/${postId}`);
+  } catch (error) {
+    console.error("Erro ao deletar o post:", error);
+    throw error;
   }
-}
+};

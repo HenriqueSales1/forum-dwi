@@ -1,9 +1,11 @@
+// Arquivo Corrigido: backend/controllers/post_controller.js
+
 import Post from "../models/post.js";
 import User from "../models/user.js";
 
 const createPost = async (req, res) => {
   try {
-    const { content, title, userId } = req.body;
+    const { content, title } = req.body;
 
     if (!title || !content) {
       return res
@@ -14,23 +16,10 @@ const createPost = async (req, res) => {
     const post = await Post.create({
       title: title,
       content: content,
-      userId: userId
+      userId: req.user.id, // CORRIGIDO: Usa o ID do usuário autenticado (do token)
     });
 
-    const responsePost = {
-      id: post.id,
-      title: post.title,
-      content: post.content,
-      createdAt: post.createdAt,
-      updatedAt: post.updatedAt,
-      userId: post.userId
-      // user: await user.findByPk(userId){
-      //   name: req.user.name,
-      //   username: req.user.username,
-      // },
-    };
-
-    res.status(201).json(responsePost);
+    res.status(201).json(post);
   } catch (error) {
     console.error("Erro ao criar post:", error);
     res
@@ -40,35 +29,60 @@ const createPost = async (req, res) => {
 };
 
 async function getPosts(req, res) {
-  const posts = await Post.findAll({include: User});
-  const newPosts = posts.map((v)=> {
-    v = v.toJSON();
-    v.username = v.User.name;
-    v.User = null;
-    return v;
+  const posts = await Post.findAll({
+    include: User,
+    order: [["createdAt", "DESC"]],
   });
-  res.json(newPosts);
+  res.json(posts);
 }
 
 async function editPost(req, res) {
-  const post = await Post.findByPk(req.params.id);
-  if (post) {
-    post.title = req.body.title;
-    post.content = req.body.content;
-    await post.save();
-    res.json(post);
-  } else {
-    res.status(404).send("Postagem não encontrada.");
+  try {
+    // CORRIGIDO: Verifica se o post pertence ao usuário que está tentando editá-lo
+    const post = await Post.findOne({
+      where: {
+        id: req.params.id,
+        userId: req.user.id,
+      },
+    });
+
+    if (post) {
+      post.title = req.body.title || post.title;
+      post.content = req.body.content || post.content;
+      await post.save();
+      res.json(post);
+    } else {
+      res
+        .status(404)
+        .json({ message: "Post não encontrado ou permissão negada." });
+    }
+  } catch (error) {
+    console.error("Erro ao editar post:", error);
+    res.status(500).json({ message: "Erro ao editar post." });
   }
 }
 
 async function deletePost(req, res) {
-  const post = await Post.findByPk(req.params.id);
-  if (post) {
-    await post.destroy();
-    res.status(204).send();
-  } else {
-    res.status(404).send("Postagem não encontrada.");
+  try {
+    // CORRIGIDO: Verifica se o post pertence ao usuário que está tentando deletá-lo
+    const post = await Post.findOne({
+      where: {
+        id: req.params.id,
+        userId: req.user.id,
+      },
+    });
+
+    if (post) {
+      await post.destroy();
+      res.status(204).send();
+    } else {
+      res
+        .status(404)
+        .json({ message: "Post não encontrado ou permissão negada." });
+    }
+  } catch (error) {
+    console.error("Erro ao deletar post:", error);
+    res.status(500).json({ message: "Erro ao deletar post." });
   }
 }
 

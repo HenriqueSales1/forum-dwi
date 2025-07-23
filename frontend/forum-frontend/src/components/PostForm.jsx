@@ -1,54 +1,68 @@
-import React, { useState, useContext } from 'react';
-import { AuthContext } from '../context/AuthContext';
-import { createPost } from '../data_acess/post_api';
+import React, { useState, useContext } from "react";
+import { createPost } from "../data_acess/post_api";
+import { AuthContext } from "../context/AuthContext";
+import "./PostForm.css";
 
 const PostForm = ({ onPostCreated }) => {
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [error, setError] = useState("");
   const { user } = useContext(AuthContext);
-  const [title, setTitle] = useState(''); 
-  const [content, setContent] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const userId = user.id;
-    const postData = { title, content, userId };
+
+    if (!title || !content) {
+      setError("Título e conteúdo são obrigatórios.");
+      return;
+    }
+
+    const postData = {
+      title,
+      content,
+    };
 
     try {
-      const newPost = await createPost(postData);
-      alert('Post criado com sucesso!');
-      setTitle(''); 
-      setContent('');
-      onPostCreated(newPost);
-    } catch (error) {
-      alert('Erro ao criar o post.');
+      const newPostFromServer = await createPost(postData);
+
+      onPostCreated(newPostFromServer);
+
+      setTitle("");
+      setContent("");
+      setError("");
+    } catch (apiError) {
+      console.error("Erro ao criar post:", apiError);
+      setError("Não foi possível criar o post. Tente novamente.");
     }
   };
 
-  if (!user) {
-    return null;
-  }
-
   return (
-    <form onSubmit={handleSubmit} className="post-form"> 
-      <h3>Criar novo post</h3>
-      
-      <input
-        type="text"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        placeholder="Título do post"
-        required
-        style={{ width: '100%', padding: '8px', boxSizing: 'border-box', marginBottom: '10px' }}
-      />
-
-      <textarea
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-        placeholder={`No que você está pensando, ${user.name}?`}
-        rows="4"
-        required
-      ></textarea><br/>
-      <button type="submit">Postar</button>
-    </form>
+    <div className="post-form-container">
+      <h3>Criar um Novo Post</h3>
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <input
+            type="text"
+            className="form-input"
+            placeholder="Título do seu post"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+        </div>
+        <div className="form-group">
+          <textarea
+            className="form-textarea"
+            placeholder="Sobre o que você está pensando?"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+          />
+        </div>
+        {error && <p className="error-message">{error}</p>}
+        <button type="submit" className="submit-button">
+          Publicar
+        </button>
+      </form>
+    </div>
   );
 };
 

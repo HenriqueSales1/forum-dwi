@@ -1,6 +1,6 @@
-import React, { useState, useContext } from "react"; 
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext"; 
+import { AuthContext } from "../context/AuthContext";
 import "./LoginPage.css";
 
 const LoginPage = () => {
@@ -16,7 +16,7 @@ const LoginPage = () => {
       await login(username_or_email, password);
 
       alert("Login bem-sucedido!");
-      navigate("/"); 
+      navigate("/");
     } catch (error) {
       if (error.response) {
         alert("Falha no login: " + error.response.data.message);

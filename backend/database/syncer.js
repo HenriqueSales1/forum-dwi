@@ -8,7 +8,7 @@ async function syncer() {
   try {
     User.hasMany(Post, { foreignKey: "userId" });
     Post.belongsTo(User, { foreignKey: "userId" });
-    
+
     User.hasMany(Comment, { foreignKey: "userId" });
     Post.hasMany(Comment, { foreignKey: "postId" });
 

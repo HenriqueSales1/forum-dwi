@@ -3,6 +3,7 @@ import { AuthContext } from "../context/AuthContext";
 import { getPosts } from "../data_acess/post_api";
 import PostForm from "../components/PostForm";
 import PostCard from "../components/PostCard";
+import { deletePost as deletePostAPI } from "../data_acess/post_api";
 import "./HomePageCss.css";
 
 const HomePage = () => {
@@ -29,11 +30,22 @@ const HomePage = () => {
       }
     };
     fetchPosts();
-   
   }, []);
 
   const handlePostCreated = (newPost) => {
     setPosts((prevPosts) => [newPost, ...prevPosts]);
+  };
+
+  const handleDeletePost = async (postId) => {
+    const confirm = window.confirm("Tem certeza que deseja deletar este post?");
+    if (!confirm) return;
+
+    try {
+      await deletePostAPI(postId);
+      setPosts((prevPosts) => prevPosts.filter((post) => post.id !== postId));
+    } catch (error) {
+      alert("Erro ao deletar o post. Tente novamente.");
+    }
   };
 
   if (isAuthLoading) {
@@ -59,9 +71,11 @@ const HomePage = () => {
       <h2>Posts Recentes</h2>
       <div>
         {posts.length > 0 ? (
-          posts.map((post) =>{
-            return <PostCard key={post.id} post={post} />
-            })
+          posts.map((post) => {
+            return (
+              <PostCard key={post.id} post={post} onDelete={handleDeletePost} />
+            );
+          })
         ) : (
           <p className="info-message">Ainda não há posts para exibir.</p>
         )}
