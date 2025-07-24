@@ -7,20 +7,16 @@ const adminMiddleware = async (req, res, next) => {
     const user = await User.findByPk(req.user.id);
 
     if (user && user.permsId === ADMIN_PERM_ID) {
-      next(); 
+      next();
     } else {
-      res
-        .status(403)
-        .json({
-          message: "Acesso negado. Requer privilégios de administrador.",
-        });
+      res.status(403).json({
+        message: "Acesso negado. Requer privilégios de administrador.",
+      });
     }
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        message: "Erro interno ao verificar permissões de administrador.",
-      });
+    res.status(500).json({
+      message: "Erro interno ao verificar permissões de administrador.",
+    });
   }
 };
 

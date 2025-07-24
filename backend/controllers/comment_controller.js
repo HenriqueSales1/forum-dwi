@@ -1,67 +1,83 @@
 import Comment from "../models/comment.js";
 import User from "../models/user.js";
+import Post from "../models/post.js";
 
 async function createComment(req, res) {
   try {
+    const { content, postId } = req.body;
+    const userId = req.user.id;
+
+    if (!content || !postId) {
+      return res
+        .status(400)
+        .json({ message: "Conteúdo e ID do post são obrigatórios." });
+    }
+
+    const post = await Post.findByPk(postId);
+    if (!post) {
+      return res.status(404).json({ message: "Post não encontrado." });
+    }
+
     const comment = await Comment.create({
-      content: req.body.content,
-      postId: req.body.postId,
-      userId: req.user.id,
-      userName: req.user.name,
+      content,
+      postId,
+      userId,
     });
-    res.status(201).json(comment);
+
+    const newCommentWithUser = await Comment.findByPk(comment.id, {
+      include: { model: User, attributes: ["id", "name", "username"] },
+    });
+
+    res.status(201).json(newCommentWithUser);
   } catch (error) {
     console.error("Erro ao criar comentário:", error);
-    res.status(500).json({ message: "Erro ao criar comentário" });
+    res.status(500).json({ message: "Erro interno ao criar comentário." });
   }
 }
 
-async function getComments(req, res) {
+async function getCommentsByPostId(req, res) {
   try {
+    const { postId } = req.params;
+
     const comments = await Comment.findAll({
-      where: { postId: req.params.postId },
-      include: [{ model: User, attributes: ["id", "name"] }],
+      where: { postId: postId },
+      include: [{ model: User, attributes: ["id", "name", "username"] }],
+      order: [["createdAt", "ASC"]],
     });
+
     res.json(comments);
   } catch (error) {
     console.error("Erro ao obter comentários:", error);
-    res.status(500).json({ message: "Erro ao obter comentários" });
-  }
-}
-
-async function editComment(req, res) {
-  try {
-    const comment = await Comment.findOne({
-      where: { id: req.params.id, userId: req.user.id },
-    });
-    if (comment) {
-      comment.content = req.body.content;
-      await comment.save();
-      res.json(comment);
-    } else {
-      res.status(404).send("Comentário não encontrado.");
-    }
-  } catch (error) {
-    console.error("Erro ao editar comentário:", error);
-    res.status(500).json({ message: "Erro ao editar comentário" });
+    res.status(500).json({ message: "Erro interno ao obter comentários." });
   }
 }
 
 async function deleteComment(req, res) {
   try {
-    const comment = await Comment.findOne({
-      where: { id: req.params.id, userId: req.user.id },
-    });
-    if (comment) {
-      await comment.destroy();
-      res.status(204).send();
-    } else {
-      res.status(404).send("Comentário não encontrado.");
+    const { id } = req.params;
+    const userId = req.user.id;
+
+    const comment = await Comment.findByPk(id);
+
+    if (!comment) {
+      return res.status(404).json({ message: "Comentário não encontrado." });
     }
+
+    const currentUser = await User.findByPk(userId);
+    const isAdmin = currentUser.permsId === 1;
+
+    if (comment.userId !== userId && !isAdmin) {
+      return res.status(403).json({
+        message: "Você não tem permissão para deletar este comentário.",
+      });
+    }
+
+    await comment.destroy();
+    res.status(204).send();
   } catch (error) {
     console.error("Erro ao deletar comentário:", error);
-    res.status(500).json({ message: "Erro ao deletar comentário" });
+    res.status(500).json({ message: "Erro interno ao deletar comentário." });
   }
 }
 
-export { createComment, getComments, editComment, deleteComment };
+export { createComment, getCommentsByPostId, deleteComment };

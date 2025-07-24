@@ -1,5 +1,3 @@
-// Arquivo Corrigido: backend/controllers/post_controller.js
-
 import Post from "../models/post.js";
 import User from "../models/user.js";
 
@@ -16,7 +14,7 @@ const createPost = async (req, res) => {
     const post = await Post.create({
       title: title,
       content: content,
-      userId: req.user.id, // CORRIGIDO: Usa o ID do usuário autenticado (do token)
+      userId: req.user.id,
     });
 
     res.status(201).json(post);
@@ -38,7 +36,6 @@ async function getPosts(req, res) {
 
 async function editPost(req, res) {
   try {
-    // CORRIGIDO: Verifica se o post pertence ao usuário que está tentando editá-lo
     const post = await Post.findOne({
       where: {
         id: req.params.id,
@@ -64,7 +61,6 @@ async function editPost(req, res) {
 
 async function deletePost(req, res) {
   try {
-    // CORRIGIDO: Verifica se o post pertence ao usuário que está tentando deletá-lo
     const post = await Post.findOne({
       where: {
         id: req.params.id,

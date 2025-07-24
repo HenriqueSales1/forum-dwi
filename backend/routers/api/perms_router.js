@@ -1,9 +1,4 @@
-import {
-  createPerm,
-  getPerms,
-  editPerm,
-  deletePerm,
-} from "../../controllers/perms_controller.js";
+import { createPerm, getPerms, editPerm, deletePerm } from "../../controllers/perms_controller.js";
 import { Router } from "express";
 import authMiddleware from "../../middleware/auth.js";
 import adminMiddleware from "../../middleware/admin.js";

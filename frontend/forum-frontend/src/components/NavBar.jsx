@@ -1,25 +1,32 @@
-import React, { useContext } from 'react'; 
-import { Link } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext'; 
-import './Navbar.css';
+import React, { useContext } from "react";
+import { Link, NavLink } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
+import "./Navbar.css";
 
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
 
   return (
     <nav className="navbar">
-      <div className="navbar-brand">
-        <Link to="/">Fórum</Link>
-      </div>
+      <Link to="/" className="navbar-brand">
+        Fórum
+      </Link>
       <div className="navbar-links">
-        {user ? ( 
-          <button onClick={logout} className="logout-button">
-            Logout
-          </button>
+        {user ? (
+          <>
+            <span className="navbar-welcome">Olá, {user.name}!</span>
+            <button onClick={logout} className="navbar-button logout">
+              Sair
+            </button>
+          </>
         ) : (
           <>
-            <Link to="/login">Login</Link>
-            <Link to="/register">Registrar</Link>
+            <NavLink to="/login" className="navbar-button">
+              Login
+            </NavLink>
+            <NavLink to="/register" className="navbar-button register">
+              Registrar
+            </NavLink>
           </>
         )}
       </div>

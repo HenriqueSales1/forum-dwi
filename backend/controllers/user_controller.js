@@ -25,7 +25,6 @@ async function createUser(req, res) {
     });
   } catch (error) {
     console.error("Erro ao criar usuário:", error);
-    // CORRIGIDO: Tratamento de erro de usuário duplicado
     if (error.name === "SequelizeUniqueConstraintError") {
       return res
         .status(400)
@@ -61,7 +60,7 @@ async function login(req, res) {
 
     const token = jwt.sign(
       { id: user.id, username: user.username, email: user.email },
-      "chave-secreta", // REVERTIDO: Chave secreta diretamente no código. ATENÇÃO: Risco de segurança.
+      "chave-secreta",
       { expiresIn: "1h" }
     );
     res.status(200).json({
@@ -89,5 +88,4 @@ const getUserProfile = async (req, res) => {
   }
 };
 
-// CORRIGIDO: As exportações foram atualizadas (sem promptUser e logout)
 export { createUser, login, getUserProfile };

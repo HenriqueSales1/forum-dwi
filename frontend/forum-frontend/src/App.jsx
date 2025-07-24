@@ -3,10 +3,11 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import Navbar from "./components/NavBar";
+import './App.css';
 
 function App() {
   return (
-    <div>
+    <div className="app-container">
       <Navbar />
       <main>
         <Routes>
