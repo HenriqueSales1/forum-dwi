@@ -1,26 +1,21 @@
-/* Arquivo: frontend/src/index.css */
-
-/* 1. Importando uma fonte moderna do Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
 
-/* 2. Definindo as variáveis do nosso Design System */
 :root {
-  --color-primary: #007bff; /* Azul vibrante para botões e links */
+  --color-primary: #007bff;
   --color-primary-hover: #0056b3;
-  --color-danger: #e74c3c; /* Vermelho para botões de deletar */
+  --color-danger: #e74c3c;
   --color-danger-hover: #c0392b;
-  --color-background: #f4f4f9; /* Fundo principal da página (cinza bem claro) */
-  --color-surface: #ffffff; /* Fundo dos cards e formulários (branco) */
-  --color-text-primary: #333333; /* Cor principal do texto */
-  --color-text-secondary: #666666; /* Cor para textos secundários */
-  --color-border: #e0e0e0; /* Cor das bordas */
+  --color-background: #f4f4f9; 
+  --color-surface: #ffffff; 
+  --color-text-primary: #333333; 
+  --color-text-secondary: #666666; 
+  --color-border: #e0e0e0;
 
   --font-family-base: 'Lato', sans-serif;
   --border-radius: 8px;
   --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-/* 3. Reset e Estilos Globais */
 * {
   box-sizing: border-box;
   margin: 0;
