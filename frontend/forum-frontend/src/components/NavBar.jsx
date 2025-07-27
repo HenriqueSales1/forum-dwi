@@ -14,6 +14,16 @@ const Navbar = () => {
       <div className="navbar-links">
         {user ? (
           <>
+            {user.permsId === 1 && (
+              <>
+                <NavLink to="/admin/users" className="navbar-button">
+                  Usuários
+                </NavLink>
+                <NavLink to="/admin/permissions" className="navbar-button">
+                  Permissões
+                </NavLink>
+              </>
+            )}
             <span className="navbar-welcome">Olá, {user.name}!</span>
             <button onClick={logout} className="navbar-button logout">
               Sair

@@ -1,6 +1,7 @@
 import { Op } from "sequelize";
 import User from "../models/user.js";
 import bcrypt from "bcrypt";
+import Perms from "../models/perms.js";
 import jwt from "jsonwebtoken";
 
 async function createUser(req, res) {
@@ -88,4 +89,17 @@ const getUserProfile = async (req, res) => {
   }
 };
 
-export { createUser, login, getUserProfile };
+async function getAllUsers(req, res) {
+    try {
+        const users = await User.findAll({
+            attributes: { exclude: ['password'] },
+            include: { model: Perms, attributes: ['name'] }
+        });
+        res.json(users);
+    } catch (error) {
+        console.error("Erro ao listar usuários:", error);
+        res.status(500).json({ message: "Erro interno ao listar usuários." });
+    }
+}
+
+export { createUser, login, getUserProfile, getAllUsers };
