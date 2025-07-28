@@ -18,7 +18,7 @@ import permsRouter from "./routers/api/perms_router.js";
 
   app.use(
     cors({
-      origin: "*",
+      origin: "FRONTEND_URL",
       methods: "GET,PUT,POST,DELETE",
     })
   );
