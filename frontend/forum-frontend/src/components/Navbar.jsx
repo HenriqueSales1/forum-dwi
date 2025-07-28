@@ -24,7 +24,7 @@ const Navbar = () => {
                 </NavLink>
               </>
             )}
-            <span className="navbar-welcome">Olá, {user.name}!</span>
+            {user.name && <span className="navbar-welcome">Olá, {user.name}!</span>}
             <button onClick={logout} className="navbar-button logout">
               Sair
             </button>
