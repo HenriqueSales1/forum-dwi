@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getAllUsers } from "../data_acess/user_api";
+import { getAllUsers } from "../data_access/user_api";
 import "./UserPage.css"; 
 
 const UserListPage = () => {

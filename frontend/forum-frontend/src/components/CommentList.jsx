@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { getCommentsForPost, deleteComment } from "../data_acess/comment_api";
+import { getCommentsForPost, deleteComment } from "../data_access/comment_api";
 import Comment from "./Comment";
 import CommentForm from "./CommentForm";
 import "./CommentList.css";

@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { getPosts } from "../data_acess/post_api";
+import { getPosts } from "../data_access/post_api";
 import PostForm from "../components/PostForm";
 import PostCard from "../components/PostCard";
-import { deletePost as deletePostAPI } from "../data_acess/post_api";
+import { deletePost as deletePostAPI } from "../data_access/post_api";
 import "./HomePageCss.css";
 
 const HomePage = () => {

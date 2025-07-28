@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getPerms, createPerm } from "../data_acess/perms_api";
+import { getPerms, createPerm } from "../data_access/perms_api";
 import "./PermissionsPage.css";
 
 const PermissionsPage = () => {

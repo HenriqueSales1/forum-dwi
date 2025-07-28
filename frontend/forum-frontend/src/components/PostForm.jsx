@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { createPost } from "../data_acess/post_api";
+import { createPost } from "../data_access/post_api";
 import { AuthContext } from "../context/AuthContext";
 import "./PostForm.css";
 
