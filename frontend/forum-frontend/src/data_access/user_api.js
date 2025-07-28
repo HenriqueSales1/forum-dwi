@@ -1,7 +1,7 @@
 import api from "./api";
 
 export const login = async (username_or_email, password) => {
-  const response = await api.post("/users/login", {
+  const response = await api.post("/api/users/login", {
     username_or_email,
     password,
   });
@@ -10,7 +10,7 @@ export const login = async (username_or_email, password) => {
 
 export const register = async (userData) => {
   try {
-    const response = await api.post("/users/register", userData);
+    const response = await api.post("/api/users/register", userData);
     return response.data;
   } catch (error) {
     console.error("Erro ao registrar:", error);
@@ -20,7 +20,7 @@ export const register = async (userData) => {
 
 export const getUserProfile = async () => {
   try {
-    const response = await api.get("/users/profile");
+    const response = await api.get("/api/users/profile");
     return response.data;
   } catch (error) {
     console.error("Erro ao buscar perfil do usuário:", error);
@@ -30,7 +30,7 @@ export const getUserProfile = async () => {
 
 export const getAllUsers = async () => {
     try {
-        const response = await api.get('/users');
+        const response = await api.get('/api/users');
         return response.data;
     } catch (error) {
         console.error("Erro ao buscar usuários:", error);

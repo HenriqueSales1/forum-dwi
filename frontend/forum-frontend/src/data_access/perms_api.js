@@ -2,7 +2,7 @@ import api from "./api";
 
 export const getPerms = async () => {
   try {
-    const response = await api.get("/perms");
+    const response = await api.get("/api/perms");
     return response.data;
   } catch (error) {
     console.error("Erro ao buscar permissões:", error);
@@ -12,7 +12,7 @@ export const getPerms = async () => {
 
 export const createPerm = async (permData) => {
     try {
-        const response = await api.post('/perms', permData);
+        const response = await api.post('/api/perms', permData);
         return response.data;
     } catch (error) {
         console.error("Erro ao criar permissão:", error);
