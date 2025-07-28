@@ -61,7 +61,7 @@ async function login(req, res) {
 
     const token = jwt.sign(
       { id: user.id, username: user.username, email: user.email },
-      "chave-secreta",
+      process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
     res.status(200).json({
