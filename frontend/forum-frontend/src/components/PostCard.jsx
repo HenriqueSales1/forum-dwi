@@ -18,7 +18,7 @@ const PostCard = ({ post, onDelete }) => {
   return (
     <div className="post-card">
       <div className="post-header">
-        <h4>{post.User ? post.User.name : "Usuário anônimo"}</h4>
+        <h4>{post.User.name ? post.User.name : "Usuário anônimo"}</h4>
         {canDelete && (
           <button className="delete-button" onClick={handleDelete}>
             Deletar
