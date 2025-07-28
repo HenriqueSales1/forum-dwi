@@ -23,6 +23,8 @@ import permsRouter from "./routers/api/perms_router.js";
     })
   );
 
+  console.log(process.env.FRONTEND_URL);
+
   app.use(express.json());
   await seedPerms();
   await seedAdminUser();
