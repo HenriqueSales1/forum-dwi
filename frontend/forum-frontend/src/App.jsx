@@ -3,6 +3,7 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import PermissionsPage from "./pages/PermissionsPage.jsx";
 import AdminRoute from "./components/AdminRoutes.jsx";
 import UserListPage from './pages/UserPage.jsx';
@@ -23,6 +24,7 @@ function App() {
           </Route>
         </Routes>
       </main>
+      <Footer />
     </div>
   );
 }
