@@ -18,12 +18,12 @@ import permsRouter from "./routers/api/perms_router.js";
 
   app.use(
     cors({
-      origin: "FRONTEND_URL",
+      origin: process.env.FRONTEND_URL,
       methods: "GET,PUT,POST,DELETE",
     })
   );
 
-  console.log(process.env.FRONTEND_URL);
+  // console.log(process.env.FRONTEND_URL);
 
   app.use(express.json());
   await seedPerms();
