@@ -1,6 +1,6 @@
 import express from "express";
 import { syncer } from "./database/syncer.js";
-import { seedPerms } from "./database/seeder.js";
+import { seedAdminUser, seedPerms } from "./database/seeder.js";
 import cors from "cors";
 
 import postRouter from "./routers/api/post_router.js";
@@ -25,6 +25,7 @@ import permsRouter from "./routers/api/perms_router.js";
 
   app.use(express.json());
   await seedPerms();
+  await seedAdminUser();
 
   app.use("/api/posts", postRouter);
   app.use("/api/users", userRouter);

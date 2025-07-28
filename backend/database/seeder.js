@@ -1,4 +1,6 @@
 import Perms from "../models/perms.js";
+import User from "../models/user.js";
+import bcrypt from "bcrypt";
 
 const permData = [
   {
@@ -25,4 +27,31 @@ const seedPerms = async () => {
   }
 };
 
-export { seedPerms };
+const seedAdminUser = async () => {
+  const cont = await User.count();
+  const password = "admin123";
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  const adminUser = [
+    {
+      name: "admin",
+      username: "admin",
+      email: "admin@exemplo.com",
+      password: hashedPassword,
+      permsId: 1,
+    }
+  ];
+  
+  try {
+    if (cont === 0) {
+      await User.bulkCreate(adminUser);
+      console.log("Usuário administrador criado com sucesso!");
+    } else {
+      console.log("Usuário administrador já existe, não foi necessário criar.");
+    }
+  } catch (error) {
+    console.error("Erro ao criar usuário administrador:", error);
+  }
+};
+
+export { seedPerms, seedAdminUser };
