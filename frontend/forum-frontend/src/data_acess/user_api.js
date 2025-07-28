@@ -37,5 +37,3 @@ export const getAllUsers = async () => {
         throw error;
     }
 };
-
-export default apiAxios;
